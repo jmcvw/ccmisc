@@ -47,7 +47,7 @@ dl_hw_form.default <- function(g_sheet, ...) {
     tidyr::unnest(submitted) %>%
     tidyr::extract(week_day, into = c('week', 'day'), '.+(\\d+).+(\\d+)', convert = TRUE)
 
-  structure(hw_form, original_names = original_names, class = c(class(hw_form), 'hw_sheet'))
+  structure(hw_form, original_names = original_names, class = c(class(hw_form), 'hw_form'))
 }
 
 
@@ -78,21 +78,30 @@ clone_hw_repos <- function(form, ..., hw_root = '~/Documents') {
 #'
 clone_hw_repos.hw_form <- function(form, ...,  hw_root) {
 
-  if (!inherits(form, 'hw_sheet')) stop('Form is not a homework form of class "hw_form"')
+  if (!inherits(form, 'hw_form')) stop('`form` is not a homework form of class "hw_form"')
 
   dots <- as.character(substitute(c(...)))[-1]
+  dots <- dots[nzchar(dots)]
 
-  form <- form[!(is.na(form[[2]]) |
-                   duplicated(form[[2]])), ]
+  form <- form[!(is.na(form[['name']]) | duplicated(form[['name']])),
+               c('name', 'gh_url')]
 
-  dir.create(path.expand(file.path(hw_root, paste(dots, collapse = '/'))))
+  repos <- tolower(basename(form[['gh_url']]))
+  students <- sub('\\.git$', '', repos)
 
-  lapply(form[[3]], gert::git_clone)
+  repo_dir <- path.expand(
+    file.path(hw_root, paste0(dots, collapse = '/'), students)
+    )
 
-  invisible(form[2:3])
+  browser()
+  if (!all(dir.exists(repo_dir))) sapply(repo_dir, dir.create, recursive = TRUE)
+
+  mapply(gert::git_clone, form[['gh_url']], repo_dir)
+
+  invisible(form)
 }
 
-
+# file.path(paste0(c('aaa'), collapse = '/'))
 #' Setup student repo clones
 #'
 #' NEED TO TEST. Is just a wrapper around download & clone functions
