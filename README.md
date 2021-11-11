@@ -39,7 +39,6 @@ cohort-specific sub-directory.
 library(ccmisc)
 
 hw_form <- 'https://docs.google.com/spreadsheets/d/...unique google sheets url...'
-hw_form <- 'https://docs.google.com/spreadsheets/d/1HyAxd5050SQmvkIyIVuZOrZoMfqHia6YyANfcewXbxo/edit#gid=1164343432'
 
 setup_cohort_repos(hw_form, , hw_root = '~/Documents/Github', 'homework', 'de999')
 ```
