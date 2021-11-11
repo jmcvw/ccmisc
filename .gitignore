@@ -1,0 +1,29 @@
+# User info
+.Rproj.user
+.Ruserdata
+
+# Saved objects
+*.RDS
+*.RData
+*.csv
+
+# History file
+*.Rhistory
+
+# Markdown generated files
+*.md
+*.tex
+*.log
+*.pdf
+*.doc
+*.docx
+*.html
+
+# Images
+*.png
+
+# Misc
+_misc*
+_temp*
+_tmp*
+Thumbs.db
