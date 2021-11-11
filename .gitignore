@@ -1,5 +1,5 @@
 # User info
-.Rproj.user
+*.Rproj*
 .Ruserdata
 
 # Saved objects
@@ -27,3 +27,4 @@ _misc*
 _temp*
 _tmp*
 Thumbs.db
+.Rproj.user
