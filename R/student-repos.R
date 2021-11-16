@@ -38,13 +38,13 @@ dl_hw_form.default <- function(g_sheet, ...) {
                       'how_complete', 'current_feeling', 'recap_topics',
                       'other_comments', 'marker', 'mark', 'marker_notes')
 
-  hw_form <- hw_form %>%
-    dplyr::rowwise() %>%
-    dplyr::mutate(week_day = ifelse(is.character(submitted), submitted, NA), .before = 1) %>%
-    dplyr::ungroup() %>%
-    tidyr::fill(week_day) %>%
-    dplyr::filter(!is.na(name)) %>%
-    tidyr::unnest(submitted) %>%
+  hw_form <- hw_form |>
+    dplyr::rowwise() |>
+    dplyr::mutate(week_day = ifelse(is.character(submitted), submitted, NA), .before = 1) |>
+    dplyr::ungroup() |>
+    tidyr::fill(week_day) |>
+    dplyr::filter(!is.na(name)) |>
+    tidyr::unnest(submitted) |>
     tidyr::extract(week_day, into = c('week', 'day'), '.+(\\d+).+(\\d+)', convert = TRUE)
 
   structure(hw_form, original_names = original_names, class = c(class(hw_form), 'hw_form'))
