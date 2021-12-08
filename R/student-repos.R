@@ -86,7 +86,7 @@ clone_hw_repos.hw_form <- function(form, ...,  hw_root) {
   form <- form[!(is.na(form[['name']]) | duplicated(form[['name']])),
                c('name', 'gh_url')]
 
-  repos <- tolower(basename(form[['gh_url']]))
+  repos <- basename(form[['gh_url']])
   students <- sub('\\.git$', '', repos)
 
   repo_dir <- path.expand(
