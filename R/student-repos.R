@@ -47,7 +47,7 @@ dl_hw_form.default <- function(g_sheet, ...) {
     tidyr::unnest(submitted) %>%
     tidyr::extract(week_day, into = c('week', 'day'), '.+(\\d+).+(\\d+)', convert = TRUE)
 
-  structure(hw_form, original_names = original_names, class = c(class(hw_form), 'hw_form'))
+  structure(hw_form, original_names = original_names, class = c('hw_form', class(hw_form)))
 }
 
 
@@ -93,7 +93,6 @@ clone_hw_repos.hw_form <- function(form, ...,  hw_root) {
     file.path(hw_root, paste0(dots, collapse = '/'), students)
     )
 
-  browser()
   if (!all(dir.exists(repo_dir))) sapply(repo_dir, dir.create, recursive = TRUE)
 
   mapply(gert::git_clone, form[['gh_url']], repo_dir)
