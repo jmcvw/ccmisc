@@ -15,7 +15,7 @@
 find_notes <- function(week, day, file_types = c('notes', 'data', 'rmd'),
                        path) {
 
-  path <- sprintf(file.path(path, 'week_%02i/day_%i'), 1, 2)
+  path <- sprintf(file.path(path, 'week_%02i/day_%i'), week, day)
 
   files <- list()
 
@@ -41,7 +41,9 @@ find_notes <- function(week, day, file_types = c('notes', 'data', 'rmd'),
 
 #' Opens notes files
 #'
-#' Loops over a vector or file paths and open the files indicated.
+#' Loops over a vector or file paths and open the files indicated. If two or
+#' more datasets have the same name basename, only the last read will be
+#' available
 #'
 #' @param week Integer
 #' @param day Integer
@@ -52,7 +54,8 @@ find_notes <- function(week, day, file_types = c('notes', 'data', 'rmd'),
 #' @export
 #'
 open_notes <- function(week, day, file_types = c('notes', 'data', 'rmd'),
-                       path = '/Users/user/Documents/GitHub/data_rewrite2') {
+                       path = '/Users/user/Documents/GitHub/data_rewrite2',
+                       clean_names = TRUE) {
 
   file_types_arg <- match.arg(file_types, several.ok = TRUE)
   if (missing(file_types)) {
@@ -64,8 +67,12 @@ open_notes <- function(week, day, file_types = c('notes', 'data', 'rmd'),
   suppressMessages(
     invisible(
       mapply(\(f, n) {
-        assign(n, readr::read_csv(f), envir = .GlobalEnv)
+        f <- readr::read_csv(f)
+        assign(n,
+               if (clean_names) janitor::clean_names(f) else f,
+               envir = .GlobalEnv)
       }, notes$data, names(notes$data))
     ))
-  invisible(lapply(unlist(notes[!names(notes) == 'data']), browseURL))
+  invisible(lapply(unlist(notes[names(notes) != 'data']), browseURL))
+  names(notes$data)
 }

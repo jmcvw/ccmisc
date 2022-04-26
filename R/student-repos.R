@@ -30,7 +30,7 @@ dl_hw_form <- function(g_sheet, ...) {
 #'
 dl_hw_form.default <- function(g_sheet, ...) {
 
-  hw_form <- googlesheets4::read_sheet(g_sheet)[-12]
+  hw_form <- googlesheets4::read_sheet(g_sheet)[1:11]
 
   original_names <- names(hw_form)
 
