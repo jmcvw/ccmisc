@@ -8,10 +8,12 @@ Description: Some misc functions for working at CodeClan
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.1.3
 Imports: 
     cli,
     dplyr,
     gert,
     googlesheets4,
     tidyr
+Depends: 
+    R (>= 2.10)

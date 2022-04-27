@@ -4,7 +4,13 @@
 \alias{find_notes}
 \title{Locate files at given path}
 \usage{
-find_notes(week, day, file_types = c("notes", "data", "rmd"), path)
+find_notes(
+  week,
+  day,
+  file_types = c("notes", "data", "rmd"),
+  path,
+  drop_dups = TRUE
+)
 }
 \arguments{
 \item{week}{Integer}
@@ -14,6 +20,8 @@ find_notes(week, day, file_types = c("notes", "data", "rmd"), path)
 \item{file_types}{Character; Any or all of 'notes', 'rmd', or 'data'}
 
 \item{path}{Character; Location of course repo}
+
+\item{drop_dups}{Logical; Remove duplicated dataset names}
 }
 \value{
 List of character vector filepaths named 'notes', 'rmd' and 'data'

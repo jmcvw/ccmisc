@@ -8,7 +8,9 @@ open_notes(
   week,
   day,
   file_types = c("notes", "data", "rmd"),
-  path = "/Users/user/Documents/GitHub/data_rewrite2"
+  path = "/Users/user/Documents/GitHub/data_rewrite2",
+  clean_names = TRUE,
+  drop_dups = TRUE
 )
 }
 \arguments{
@@ -19,7 +21,16 @@ open_notes(
 \item{file_types}{Character; Any or all of 'notes', 'rmd', or 'data'}
 
 \item{path}{Character; Location of course repo}
+
+\item{clean_names}{Logical; Pass dataset columns names through \code{\link{janitor::clean_names}}}
+
+\item{drop_dups}{Logical; Remove duplicated dataset names}
+}
+\value{
+Character; names of datasets attached.
 }
 \description{
-Loops over a vector or file paths and open the files indicated.
+Loops over a vector or file paths and open the files indicated. If two or
+more datasets have the same name basename, only the last read will be
+available
 }
