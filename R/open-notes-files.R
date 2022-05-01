@@ -78,6 +78,7 @@ open_notes <- function(week, day, file_types = c('notes', 'data', 'rmd'),
                envir = .GlobalEnv)
       }, notes$data, names(notes$data))
     ))
-  invisible(lapply(unlist(notes[names(notes) != 'data']), browseURL))
-  names(notes$data)
+  lapply(unlist(notes[names(notes) != 'data']), browseURL)
+  structure(names(notes$data),
+            path = sub('(week_\\d{1,2}/day_\\d/).+', '\\1', notes$notes[1]))
 }
